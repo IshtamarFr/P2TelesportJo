@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js/auto';
-import { Olympic } from '../core/models/Olympic';
+import { Olympic } from '../../core/models/Olympic';
 import { Observable } from 'rxjs';
-import { OlympicService } from '../core/services/olympic.service';
+import { OlympicService } from '../../core/services/olympic.service';
 
 @Component({
   selector: 'app-pie-chart',
