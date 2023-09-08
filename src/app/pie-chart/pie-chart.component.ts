@@ -19,15 +19,29 @@ export class PieChartComponent implements OnInit {
   }
 
   createChart(olympics: Array<Olympic>) {
+    //This code lists all countries and counts how many medals they get in total
+    let mLabels: Array<string> = [];
+    let mMedals: Array<number> = [];
+
+    for (let i = 0; i < olympics.length; i++) {
+      mLabels.push(olympics[i].country);
+      let medals: number = 0;
+
+      for (let j = 0; j < olympics[i].participations.length; j++) {
+        medals += olympics[i].participations[j].medalsCount;
+      }
+      mMedals.push(medals);
+    }
+
+    //This code returns the pie chart
     return new Chart('MyChart', {
       type: 'pie',
 
       data: {
-        // values on X-Axis
-        labels: olympics.map((x) => x.country),
+        labels: mLabels,
         datasets: [
           {
-            data: olympics.map((x) => x.participations.length),
+            data: mMedals,
             hoverOffset: 4,
           },
         ],
