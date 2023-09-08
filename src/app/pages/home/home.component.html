@@ -1,6 +1,9 @@
 <h2>Olympic games app</h2>
 <hr />
+<app-pie-chart></app-pie-chart>
+<hr />
 <div *ngFor="let olympic of olympics$ | async">
   {{ olympic.country }}
 </div>
+<hr />
 <p>{{ (olympics$ | async)?.length }} data loaded</p>
