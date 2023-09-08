@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js/auto';
+import { Olympic } from '../core/models/Olympic';
+import { Observable } from 'rxjs';
+import { OlympicService } from '../core/services/olympic.service';
 
 @Component({
   selector: 'app-pie-chart',
@@ -7,33 +10,24 @@ import { Chart } from 'chart.js/auto';
   styleUrls: ['./pie-chart.component.scss'],
 })
 export class PieChartComponent implements OnInit {
-  public chart: any;
+  public olympics$!: Observable<Array<Olympic>>;
 
-  constructor() {}
+  constructor(private olympicService: OlympicService) {}
 
   ngOnInit(): void {
-    this.createChart();
+    this.olympics$ = this.olympicService.getOlympics();
   }
 
-  createChart() {
-    this.chart = new Chart('MyChart', {
+  createChart(olympics: Array<Olympic>) {
+    return new Chart('MyChart', {
       type: 'pie',
 
       data: {
         // values on X-Axis
-        labels: ['Red', 'Pink', 'Green', 'Yellow', 'Orange', 'Blue'],
+        labels: olympics.map((x) => x.country),
         datasets: [
           {
-            label: 'My First Dataset',
-            data: [300, 240, 100, 432, 253, 34],
-            backgroundColor: [
-              'red',
-              'pink',
-              'green',
-              'yellow',
-              'orange',
-              'blue',
-            ],
+            data: olympics.map((x) => x.participations.length),
             hoverOffset: 4,
           },
         ],
