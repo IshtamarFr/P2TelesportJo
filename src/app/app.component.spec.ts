@@ -19,7 +19,7 @@ describe('AppComponent', () => {
   it(`should have as title 'olympic-games-starter'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title.getTitle).toEqual('olympic-games-starter');
+    expect(app.title.getTitle()).toEqual('olympic-games-starter');
   });
 
   it('should render title', () => {
