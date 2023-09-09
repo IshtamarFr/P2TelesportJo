@@ -4,6 +4,7 @@ import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Chart } from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,7 @@ export class HomeComponent implements OnInit {
   mLabels!: Array<string>;
   mMedals!: Array<number>;
 
-  constructor(private olympicService: OlympicService) {}
+  constructor(private olympicService: OlympicService, private router: Router) {}
 
   ngOnInit(): void {
     this.mLabels = [];
@@ -47,13 +48,14 @@ export class HomeComponent implements OnInit {
         onClick: (e) => {
           //Need to use this nasty getElementsAtEventForMode to get the index for the click (got data from chart.js API)
           try {
-            console.log(
-              this.pieChart.getElementsAtEventForMode(
-                e,
-                'nearest',
-                { intersect: true },
-                true
-              )[0].index
+            this.router.navigateByUrl(
+              '/' +
+                this.pieChart.getElementsAtEventForMode(
+                  e,
+                  'nearest',
+                  { intersect: true },
+                  true
+                )[0].index
             );
             //Used this catch to not throw error when clicked on empty space : no problem at all
           } catch {}
