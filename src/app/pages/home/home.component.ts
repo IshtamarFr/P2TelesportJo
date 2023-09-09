@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Chart } from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-home',
@@ -28,6 +29,7 @@ export class HomeComponent implements OnInit {
   createChart() {
     this.pieChart = new Chart('MyChart', {
       type: 'pie',
+      plugins: [ChartDataLabels],
 
       data: {
         labels: this.mLabels,
@@ -42,7 +44,7 @@ export class HomeComponent implements OnInit {
         responsive: true,
         aspectRatio: 2.5,
         onClick: (e) => {
-          //Need to use this nasty getElementsAtEventForMode to get the index for the click
+          //Need to use this nasty getElementsAtEventForMode to get the index for the click (got data from chart.js API)
           try {
             console.log(
               this.pieChart.getElementsAtEventForMode(
@@ -54,6 +56,9 @@ export class HomeComponent implements OnInit {
             );
             //Used this catch to not throw error when clicked on empty space : no problem at all
           } catch {}
+        },
+        plugins: {
+          datalabels: {},
         },
       },
     });
