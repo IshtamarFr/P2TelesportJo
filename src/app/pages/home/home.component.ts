@@ -94,10 +94,10 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  //This code counts how many unique ollympics game there are
+  //This code counts how many unique olympics game there are
   countUniqueGames(olympics: Array<Olympic> | null): number {
+    var setOlympic = new Set<number>();
     if (olympics) {
-      var setOlympic = new Set<number>();
       for (let i = 0; i < olympics.length; i++) {
         for (let j = 0; j < olympics[i].participations.length; j++) {
           setOlympic.add(olympics[i].participations[j].year);
