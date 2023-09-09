@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   }
 
   //This code makes an empty chart
-  createChart() {
+  createChart(): void {
     this.pieChart = new Chart('MyChart', {
       type: 'pie',
       plugins: [ChartDataLabels],
@@ -79,7 +79,7 @@ export class HomeComponent implements OnInit {
   }
 
   //This code makes a chart from all countries and counts how many medals they get in total
-  modifyChart(olympics: Array<Olympic>) {
+  modifyChart(olympics: Array<Olympic>): void {
     if (olympics) {
       for (let i = 0; i < olympics.length; i++) {
         this.mLabels.push(olympics[i].country);
@@ -91,6 +91,21 @@ export class HomeComponent implements OnInit {
         this.mMedals.push(medals);
       }
       this.createChart();
+    }
+  }
+
+  //This code counts how many unique ollympics game there are
+  countUniqueGames(olympics: Array<Olympic> | null): number {
+    if (olympics) {
+      var setOlympic = new Set<number>();
+      for (let i = 0; i < olympics.length; i++) {
+        for (let j = 0; j < olympics[i].participations.length; j++) {
+          setOlympic.add(olympics[i].participations[j].year);
+        }
+      }
+      return setOlympic.size;
+    } else {
+      return 0;
     }
   }
 }
