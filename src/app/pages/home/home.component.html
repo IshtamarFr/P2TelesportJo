@@ -1,10 +1,12 @@
 <h2>Medals per countries</h2>
 <div id="mainInfos">
   <div class="specificInfos">
-    Numbers of JOs: {{ countUniqueGames(olympics$ | async) }}
+    Numbers of JOs:<br />
+    <strong>{{ countUniqueGames(olympics$ | async) }}</strong>
   </div>
   <div class="specificInfos">
-    Number of Countries: {{ (olympics$ | async)?.length }}
+    Number of Countries:<br />
+    <strong>{{ (olympics$ | async)?.length }}</strong>
   </div>
 </div>
 <div class="chartContainer">
