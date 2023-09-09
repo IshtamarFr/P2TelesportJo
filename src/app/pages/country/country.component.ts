@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
 @Component({
@@ -7,7 +10,17 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
   styleUrls: ['./country.component.scss'],
 })
 export class CountryComponent implements OnInit {
-  constructor(private olympicService: OlympicService) {}
+  country!: Olympic;
+  olympics$!: Observable<Array<Olympic>>;
+  countryId!: number;
 
-  ngOnInit(): void {}
+  constructor(
+    private olympicService: OlympicService,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.countryId = +this.route.snapshot.params['id'];
+    this.olympics$ = this.olympicService.getOlympics();
+  }
 }

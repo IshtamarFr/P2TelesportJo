@@ -1,3 +1,5 @@
 <app-header></app-header>
 <hr />
-<p>country works!</p>
+<div *ngIf="olympics$ | async as olympic">
+  <h2>{{ olympic[countryId].country }}</h2>
+</div>
