@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
 
   //This code makes an empty chart
   createChart() {
-    this.pieChart = this.pieChart = new Chart('MyChart', {
+    this.pieChart = new Chart('MyChart', {
       type: 'pie',
 
       data: {
@@ -41,7 +41,20 @@ export class HomeComponent implements OnInit {
       options: {
         responsive: true,
         aspectRatio: 2.5,
-        onClick: () => console.log('clicked'),
+        onClick: (e) => {
+          //Need to use this nasty getElementsAtEventForMode to get the index for the click
+          try {
+            console.log(
+              this.pieChart.getElementsAtEventForMode(
+                e,
+                'nearest',
+                { intersect: true },
+                true
+              )[0].index
+            );
+            //Used this catch to not throw error when clicked on empty space : no problem at all
+          } catch {}
+        },
       },
     });
   }
