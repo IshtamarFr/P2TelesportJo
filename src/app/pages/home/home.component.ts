@@ -10,46 +10,55 @@ import { Chart } from 'chart.js/auto';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public olympics$!: Observable<Array<Olympic>>;
-  public pieChart!: any;
+  olympics$!: Observable<Array<Olympic>>;
+  pieChart!: any;
+  mLabels!: Array<string>;
+  mMedals!: Array<number>;
 
   constructor(private olympicService: OlympicService) {}
 
   ngOnInit(): void {
+    this.mLabels = [];
+    this.mMedals = [];
     this.olympics$ = this.olympicService.getOlympics();
+    this.olympics$.subscribe((value) => this.modifyChart(value));
   }
 
-  createChart(olympics: Array<Olympic>) {
-    //This code lists all countries and counts how many medals they get in total
-    let mLabels: Array<string> = [];
-    let mMedals: Array<number> = [];
-
-    for (let i = 0; i < olympics.length; i++) {
-      mLabels.push(olympics[i].country);
-      let medals: number = 0;
-
-      for (let j = 0; j < olympics[i].participations.length; j++) {
-        medals += olympics[i].participations[j].medalsCount;
-      }
-      mMedals.push(medals);
-    }
-
-    //This code returns the pie chart
-    this.pieChart = new Chart('MyChart', {
+  //This code makes an empty chart
+  createChart() {
+    this.pieChart = this.pieChart = new Chart('MyChart', {
       type: 'pie',
 
       data: {
-        labels: mLabels,
+        labels: this.mLabels,
         datasets: [
           {
-            data: mMedals,
+            data: this.mMedals,
             hoverOffset: 4,
           },
         ],
       },
       options: {
+        responsive: true,
         aspectRatio: 2.5,
+        onClick: () => console.log('clicked'),
       },
     });
+  }
+
+  //This code makes a chart from all countries and counts how many medals they get in total
+  modifyChart(olympics: Array<Olympic>) {
+    if (olympics) {
+      for (let i = 0; i < olympics.length; i++) {
+        this.mLabels.push(olympics[i].country);
+        let medals: number = 0;
+
+        for (let j = 0; j < olympics[i].participations.length; j++) {
+          medals += olympics[i].participations[j].medalsCount;
+        }
+        this.mMedals.push(medals);
+      }
+      this.createChart();
+    }
   }
 }
