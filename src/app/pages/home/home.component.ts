@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
       },
       options: {
         responsive: true,
-        aspectRatio: 2.5,
+        maintainAspectRatio: false,
         onClick: (e) => {
           //Need to use this nasty getElementsAtEventForMode to get the index for the click (got data from chart.js API)
           try {
@@ -58,7 +58,21 @@ export class HomeComponent implements OnInit {
           } catch {}
         },
         plugins: {
-          datalabels: {},
+          legend: {
+            display: false,
+          },
+          datalabels: {
+            anchor: 'end',
+            align: 'end',
+            offset: 0,
+            formatter: function (value, context) {
+              if (context.chart.data.labels) {
+                return context.chart.data.labels[context.dataIndex];
+              } else {
+                return value;
+              }
+            },
+          },
         },
       },
     });
