@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+
         onClick: (e) => {
           //Need to use this nasty getElementsAtEventForMode to get the index for the click (got data from chart.js API)
           try {
@@ -63,8 +64,13 @@ export class HomeComponent implements OnInit {
           },
           datalabels: {
             anchor: 'end',
-            align: 'end',
-            offset: 0,
+            align: 'start',
+            offset: 15,
+            color: 'black',
+            font: {
+              size: 15,
+              weight: 1000,
+            },
             formatter: function (value, context) {
               if (context.chart.data.labels) {
                 return context.chart.data.labels[context.dataIndex];
