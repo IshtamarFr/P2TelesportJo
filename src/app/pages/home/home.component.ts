@@ -14,14 +14,12 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   olympics$!: Observable<Array<Olympic>>;
   pieChart!: any;
-  mLabels!: Array<string>;
-  mMedals!: Array<number>;
+  mLabels: Array<string> = [];
+  mMedals: Array<number> = [];
 
   constructor(private olympicService: OlympicService, private router: Router) {}
 
   ngOnInit(): void {
-    this.mLabels = [];
-    this.mMedals = [];
     this.olympics$ = this.olympicService.getOlympics();
     this.olympics$.subscribe((value) => this.modifyChart(value));
   }
