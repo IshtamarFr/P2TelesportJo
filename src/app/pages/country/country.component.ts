@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Observable } from 'rxjs';
@@ -23,7 +23,8 @@ export class CountryComponent implements OnInit {
 
   constructor(
     private olympicService: OlympicService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -76,6 +77,8 @@ export class CountryComponent implements OnInit {
         this.totalAthletes += olympic[i].athleteCount;
       }
       this.createChart();
+    } else {
+      this.router.navigateByUrl('error');
     }
   }
 }

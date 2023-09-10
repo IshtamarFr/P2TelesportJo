@@ -6,6 +6,10 @@ import { CountryComponent } from './pages/country/country.component';
 
 const routes: Routes = [
   {
+    path: 'error',
+    component: NotFoundComponent,
+  },
+  {
     path: ':id',
     component: CountryComponent,
     /*I dont use any lazy-loading as the child path has only one component
