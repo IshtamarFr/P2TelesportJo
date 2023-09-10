@@ -56,20 +56,8 @@ export class CountryComponent implements OnInit {
             display: false,
           },
           datalabels: {
-            anchor: 'end',
-            align: 'start',
-            offset: 15,
-            color: 'black',
-            font: {
-              size: 15,
-              weight: 1000,
-            },
             formatter: function (value, context) {
-              if (context.chart.data.labels) {
-                return context.chart.data.labels[context.dataIndex];
-              } else {
-                return value;
-              }
+              return null;
             },
           },
         },
