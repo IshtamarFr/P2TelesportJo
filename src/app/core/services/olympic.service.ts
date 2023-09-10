@@ -29,15 +29,4 @@ export class OlympicService {
   getOlympics(): Observable<Array<Olympic>> {
     return this.olympics$.asObservable();
   }
-
-  countUniqueGames(): number {
-    var setOlympic = new Set<number>();
-    const olympics = this.olympics$.getValue();
-    for (let i = 0; i < olympics.getValue().length; i++) {
-      for (let j = 0; j < olympics[i].participations.length; j++) {
-        setOlympic.add(olympics[i].participations[j].year);
-      }
-    }
-    return setOlympic.size;
-  }
 }

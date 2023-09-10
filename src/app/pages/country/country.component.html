@@ -2,4 +2,18 @@
 <hr />
 <div *ngIf="olympics$ | async as olympic">
   <h2>{{ olympic[countryId].country }}</h2>
+  <div id="mainInfos">
+    <div class="specificInfos">
+      Numbers of entries:<br />
+      <strong>{{ olympic[countryId].participations.length }}</strong>
+    </div>
+    <div class="specificInfos">
+      Total number medals:<br />
+      <strong>{{ "---" }}</strong>
+    </div>
+    <div class="specificInfos">
+      Total number athletes:<br />
+      <strong>{{ "---" }}</strong>
+    </div>
+  </div>
 </div>

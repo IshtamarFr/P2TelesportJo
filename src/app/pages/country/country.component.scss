@@ -1,0 +1,29 @@
+h2 {
+  width: fit-content;
+  margin: auto;
+  text-align: center;
+  background-color: darkcyan;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  font-family: sans-serif;
+  margin-bottom: 20px;
+}
+
+.specificInfos {
+  width: fit-content;
+  margin: auto;
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  font-family: sans-serif;
+  border-color: darkcyan;
+  border-style: solid;
+  border-width: 3px;
+}
+
+#mainInfos {
+  margin: auto;
+  display: flex;
+  justify-content: space-evenly;
+}
