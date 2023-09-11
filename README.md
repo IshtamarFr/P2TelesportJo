@@ -16,4 +16,23 @@ Run `ng build --base-href ./` to build the project. The build artifacts will be 
 
 To see an example running, please visit `https://ishta.ishtamar.fr/test/ocr/p2`.
 
-Enjoy!
+## How it works
+
+* Home Page
+
+This gets data from olympic game API to list countries and their total medals and show them in a pie-chart.
+When a country is clicked-on, it redirects to that country's page for more details
+
+* Country page
+
+This gets data from olympic game API to retrieve infos about that country: year, name of event, total medals for this event, number of athletes.
+This data is shown as a line-chart.
+Total athletes and medals are rendered as well.
+It's possible to get back to home page.
+
+* Miscellaneous
+
+Webapp redirect to error page if:
+  * user tries to enter manually an address
+  * a country doesn't exist
+  * a problem occured with data (no Internet, data corruption,...)
