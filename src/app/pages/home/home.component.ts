@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   pieChart!: any;
   mLabels: Array<string> = [];
   mMedals: Array<number> = [];
+  mNumberOfGames: number = 0;
 
   constructor(private olympicService: OlympicService, private router: Router) {}
 
@@ -84,34 +85,15 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  //This code makes a chart from all countries and counts how many medals they get in total
+  //Callback from Observable
   modifyChart(olympics: Array<Olympic>): void {
     if (olympics) {
       for (let i = 0; i < olympics.length; i++) {
         this.mLabels.push(olympics[i].country);
-        let medals: number = 0;
-
-        for (let j = 0; j < olympics[i].participations.length; j++) {
-          medals += olympics[i].participations[j].medalsCount;
-        }
-        this.mMedals.push(medals);
+        this.mMedals.push(this.olympicService.countMedals(olympics[i]));
       }
+      this.mNumberOfGames = this.olympicService.countUniqueGames(olympics);
       this.createChart();
-    }
-  }
-
-  //This code counts how many unique olympics game there are
-  countUniqueGames(olympics: Array<Olympic> | null): number {
-    var setOlympic = new Set<number>();
-    if (olympics) {
-      for (let i = 0; i < olympics.length; i++) {
-        for (let j = 0; j < olympics[i].participations.length; j++) {
-          setOlympic.add(olympics[i].participations[j].year);
-        }
-      }
-      return setOlympic.size;
-    } else {
-      return 0;
     }
   }
 }

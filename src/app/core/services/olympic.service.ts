@@ -29,4 +29,27 @@ export class OlympicService {
   getOlympics(): Observable<Array<Olympic>> {
     return this.olympics$.asObservable();
   }
+
+  countMedals(olympic: Olympic): number {
+    let medals: number = 0;
+
+    for (let i = 0; i < olympic.participations.length; i++) {
+      medals += olympic.participations[i].medalsCount;
+    }
+    return medals;
+  }
+
+  countUniqueGames(olympics: Array<Olympic> | null): number {
+    var setOlympic = new Set<number>();
+    if (olympics) {
+      for (let i = 0; i < olympics.length; i++) {
+        for (let j = 0; j < olympics[i].participations.length; j++) {
+          setOlympic.add(olympics[i].participations[j].year);
+        }
+      }
+      return setOlympic.size;
+    } else {
+      return 0;
+    }
+  }
 }
