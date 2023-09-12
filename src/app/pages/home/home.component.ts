@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.olympics$ = this.olympicService.getOlympics();
-    this.olympics$.subscribe((value) => this.modifyChart(value));
+    this.olympics$.subscribe((value) => this.modifyChartData(value));
   }
 
   //This code makes an empty chart
@@ -85,12 +85,12 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  //Callback from Observable
-  modifyChart(olympics: Array<Olympic>): void {
+  //Sets chart and data from Observable subscription
+  modifyChartData(olympics: Array<Olympic>): void {
     if (olympics) {
-      for (let i = 0; i < olympics.length; i++) {
-        this.mLabels.push(olympics[i].country);
-        this.mMedals.push(this.olympicService.countMedals(olympics[i]));
+      for (let olympic of olympics) {
+        this.mLabels.push(olympic.country);
+        this.mMedals.push(this.olympicService.countMedals(olympic));
       }
       this.mNumberOfGames = this.olympicService.countUniqueGames(olympics);
       this.createChart();

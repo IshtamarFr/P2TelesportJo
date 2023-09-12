@@ -33,8 +33,8 @@ export class OlympicService {
   countMedals(olympic: Olympic): number {
     let medals: number = 0;
 
-    for (let i = 0; i < olympic.participations.length; i++) {
-      medals += olympic.participations[i].medalsCount;
+    for (let participation of olympic.participations) {
+      medals += participation.medalsCount;
     }
     return medals;
   }
@@ -42,9 +42,9 @@ export class OlympicService {
   countUniqueGames(olympics: Array<Olympic> | null): number {
     var setOlympic = new Set<number>();
     if (olympics) {
-      for (let i = 0; i < olympics.length; i++) {
-        for (let j = 0; j < olympics[i].participations.length; j++) {
-          setOlympic.add(olympics[i].participations[j].year);
+      for (let olympic of olympics) {
+        for (let participation of olympic.participations) {
+          setOlympic.add(participation.year);
         }
       }
       return setOlympic.size;

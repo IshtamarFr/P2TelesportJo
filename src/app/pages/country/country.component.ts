@@ -30,7 +30,7 @@ export class CountryComponent implements OnInit {
   ngOnInit(): void {
     this.countryId = +this.route.snapshot.params['id'];
     this.olympics$ = this.olympicService.getOlympics();
-    this.olympics$.subscribe((value) => this.modifyChart(value));
+    this.olympics$.subscribe((value) => this.modifyChartData(value));
   }
 
   //This code makes an empty chart
@@ -66,15 +66,15 @@ export class CountryComponent implements OnInit {
     });
   }
 
-  //This code makes a chart from selected country
-  modifyChart(olympics: Array<Olympic>): void {
+  //Set charts and data from Observable subscription
+  modifyChartData(olympics: Array<Olympic>): void {
     if (olympics) {
       const olympic = olympics[this.countryId].participations;
-      for (let i = 0; i < olympic.length; i++) {
-        this.mLabels.push(olympic[i].year);
-        this.mMedals.push(olympic[i].medalsCount);
-        this.totalMedals += olympic[i].medalsCount;
-        this.totalAthletes += olympic[i].athleteCount;
+      for (let entry of olympic) {
+        this.mLabels.push(entry.year);
+        this.mMedals.push(entry.medalsCount);
+        this.totalMedals += entry.medalsCount;
+        this.totalAthletes += entry.athleteCount;
       }
       this.createChart();
     } else {
