@@ -20,29 +20,3 @@
 <div class="chartContainer">
   <canvas id="MyChart"></canvas>
 </div>
-<hr />
-<div *ngIf="olympics$ | async as olympics">
-  <div *ngIf="olympics[countryId] as olympic">
-    <table>
-      <caption>
-        Details
-      </caption>
-      <thead>
-        <tr>
-          <th>Year</th>
-          <th>City</th>
-          <th>Medals</th>
-          <th>Athletes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let og of olympic.participations">
-          <th>{{ og.year }}</th>
-          <th>{{ og.city }}</th>
-          <th>{{ og.medalsCount }}</th>
-          <th>{{ og.athleteCount }}</th>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
