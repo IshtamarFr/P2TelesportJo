@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
@@ -11,7 +11,7 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
   templateUrl: './country.component.html',
   styleUrls: ['./country.component.scss'],
 })
-export class CountryComponent implements OnInit {
+export class CountryComponent implements OnInit, OnDestroy {
   country!: Olympic;
   olympics$!: Observable<Array<Olympic>>;
   countryId!: number;
@@ -20,6 +20,7 @@ export class CountryComponent implements OnInit {
   mMedals: Array<number> = [];
   totalMedals: number = 0;
   totalAthletes: number = 0;
+  subscription!: Subscription;
 
   constructor(
     private olympicService: OlympicService,
@@ -30,7 +31,13 @@ export class CountryComponent implements OnInit {
   ngOnInit(): void {
     this.countryId = +this.route.snapshot.params['id'];
     this.olympics$ = this.olympicService.getOlympics();
-    this.olympics$.subscribe((value) => this.modifyChartData(value));
+    this.subscription = this.olympics$.subscribe((value) =>
+      this.modifyChartData(value)
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   //This code makes an empty chart

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription, of } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Chart } from 'chart.js/auto';
@@ -11,18 +11,25 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   olympics$!: Observable<Array<Olympic>>;
   pieChart!: any;
   mLabels: Array<string> = [];
   mMedals: Array<number> = [];
   mNumberOfGames: number = 0;
+  subscription!: Subscription;
 
   constructor(private olympicService: OlympicService, private router: Router) {}
 
   ngOnInit(): void {
     this.olympics$ = this.olympicService.getOlympics();
-    this.olympics$.subscribe((value) => this.modifyChartData(value));
+    this.subscription = this.olympics$.subscribe((value) =>
+      this.modifyChartData(value)
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   //This code makes an empty chart
