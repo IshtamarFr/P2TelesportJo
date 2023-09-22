@@ -88,4 +88,8 @@ export class CountryComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl('error');
     }
   }
+
+  goBackHome(): void {
+    this.router.navigateByUrl('');
+  }
 }

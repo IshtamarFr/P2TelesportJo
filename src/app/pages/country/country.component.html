@@ -1,5 +1,3 @@
-<app-header></app-header>
-<hr />
 <div *ngIf="olympics$ | async as olympic">
   <h2>{{ olympic[countryId].country }}</h2>
   <div id="mainInfos">
@@ -19,4 +17,7 @@
 </div>
 <div class="chartContainer">
   <canvas id="MyChart"></canvas>
+</div>
+<div class="backHome">
+  <button (click)="goBackHome()">Home</button>
 </div>
