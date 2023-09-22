@@ -23,11 +23,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private olympicService: OlympicService, private router: Router) {}
 
   ngOnInit(): void {
-    this.data = this.olympicService.loadInitialData().subscribe();
-    this.olympics$ = this.olympicService.getOlympics();
-    this.subscription = this.olympics$.subscribe((value) => {
-      this.modifyChartData(value);
-    });
+    this.data = this.olympicService
+      .loadInitialData()
+      .subscribe(() => this.setInitialData());
   }
 
   ngOnDestroy(): void {
@@ -105,5 +103,14 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.mNumberOfGames = this.olympicService.countUniqueGames(olympics);
       this.createChart();
     }
+  }
+
+  //Sets initial data
+  //this embedding lets it do so modifyChart waits for initialData before creating new Chart
+  setInitialData() {
+    this.olympics$ = this.olympicService.getOlympics();
+    this.subscription = this.olympics$.subscribe((value) => {
+      this.modifyChartData(value);
+    });
   }
 }
