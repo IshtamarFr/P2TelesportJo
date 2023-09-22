@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private olympicService: OlympicService, private router: Router) {}
 
   ngOnInit(): void {
-    this.data = this.olympicService.loadInitialData().pipe(take(1)).subscribe();
+    this.data = this.olympicService.loadInitialData().subscribe();
     this.olympics$ = this.olympicService.getOlympics();
     this.subscription = this.olympics$.subscribe((value) => {
       this.modifyChartData(value);
@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.data.unsubscribe();
   }
 
   //This code makes an empty chart
