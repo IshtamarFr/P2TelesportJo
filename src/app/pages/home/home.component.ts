@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription, of } from 'rxjs';
+import { Observable, Subscription, of, take } from 'rxjs';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { Chart } from 'chart.js/auto';
@@ -18,14 +18,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   mMedals: Array<number> = [];
   mNumberOfGames: number = 0;
   subscription!: Subscription;
+  data!: Subscription;
 
   constructor(private olympicService: OlympicService, private router: Router) {}
 
   ngOnInit(): void {
+    this.data = this.olympicService.loadInitialData().pipe(take(1)).subscribe();
     this.olympics$ = this.olympicService.getOlympics();
-    this.subscription = this.olympics$.subscribe((value) =>
-      this.modifyChartData(value)
-    );
+    this.subscription = this.olympics$.subscribe((value) => {
+      this.modifyChartData(value);
+    });
   }
 
   ngOnDestroy(): void {
