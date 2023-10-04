@@ -33,7 +33,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.data.unsubscribe();
   }
 
-  //This code makes an empty chart
+  /**
+   * Creates an empty pie chart, responsive.
+   * Creates the click event that lets navigate to specific chosen country
+   *
+   * @remarks
+   * Requires {@link chart.js/auto} and {@link chartjs-plugin-datalabels}
+   */
   createChart(): void {
     this.pieChart = new Chart('MyChart', {
       type: 'pie',
@@ -93,7 +99,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  //Sets chart and data from Observable subscription
+  /**
+   * Populates the empty pie chart with correct data
+   *
+   * @param olympics - The array of olympics retrieved by service
+   */
   modifyChartData(olympics: Array<Olympic>): void {
     if (olympics) {
       for (let olympic of olympics) {
@@ -105,8 +115,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  //Sets initial data
-  //this embedding lets it do so modifyChart waits for initialData before creating new Chart
+  /**
+   * Sets initial data
+   *
+   * @remarks
+   * This embedding lets it do so modifyChart waits for initialData before creating new Chart
+   */
   setInitialData() {
     this.olympics$ = this.olympicService.getOlympics();
     this.subscription = this.olympics$.subscribe((value) => {

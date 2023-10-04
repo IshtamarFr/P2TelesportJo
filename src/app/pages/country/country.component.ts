@@ -40,7 +40,12 @@ export class CountryComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  //This code makes an empty chart
+  /**
+   * Creates an empty line chart, responsive.
+   *
+   * @remarks
+   * Requires {@link chart.js/auto} and {@link chartjs-plugin-datalabels}
+   */
   createChart(): void {
     this.lineChart = new Chart('MyChart', {
       type: 'line',
@@ -73,7 +78,14 @@ export class CountryComponent implements OnInit, OnDestroy {
     });
   }
 
-  //Set charts and data from Observable subscription
+  /**
+   * Populates the empty line chart with correct data
+   *
+   * @param olympics - The array of olympics retrieved by service
+   *
+   * @remarks
+   * Only the selected country is used
+   */
   modifyChartData(olympics: Array<Olympic>): void {
     if (olympics) {
       const olympic = olympics[this.countryId].participations;

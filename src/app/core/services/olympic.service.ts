@@ -5,6 +5,9 @@ import { catchError, tap } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
 import { Router } from '@angular/router';
 
+/**
+ * Main service for the Webapp, responsible for getting data and for calculations, which results are served to components
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -30,6 +33,12 @@ export class OlympicService {
     return this.olympics$.asObservable();
   }
 
+  /**
+   * Returns the total number of medals for a chosen country
+   *
+   * @param olympic - The chosen country
+   * @returns The addition of all numbers of medals for that country
+   */
   countMedals(olympic: Olympic): number {
     let medals: number = 0;
 
@@ -39,6 +48,12 @@ export class OlympicService {
     return medals;
   }
 
+  /**
+   * Counts how many unique olympic game events have been recorded
+   *
+   * @param olympics - Data from API
+   * @returns The number of olympic game events
+   */
   countUniqueGames(olympics: Array<Olympic> | null): number {
     var setOlympic = new Set<number>();
     if (olympics) {
